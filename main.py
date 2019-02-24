@@ -12,7 +12,7 @@ def main():
 
     X = []
     y = []
-    f = open("data/square_100.txt", 'r')
+    f = open('data/square_100.txt', 'r')
     f.readline()
     for line in f:
         splited = line.strip().split('\t')
@@ -32,7 +32,6 @@ def main():
     print('plain instance predict proba: ' + str(inst.pi_predict_proba))
     print('counter-factual instance predict proba: ' + str(inst.cfi_predict_proba))
     print('distance: ' + str(inst.distance))
-
 
 if __name__ == "__main__":
     main()

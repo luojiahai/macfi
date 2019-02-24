@@ -2,7 +2,7 @@ import numpy as np
 import sklearn
 import sklearn.metrics
 import sklearn.preprocessing
-from sklearn.utils import check_random_state
+import sklearn.utils
 
 import instance
 
@@ -10,7 +10,7 @@ class MACFITabularFinder(object):
     def __init__(self,
                  training_data,
                  random_state=None):
-        self.random_state = check_random_state(random_state)
+        self.random_state = sklearn.utils.check_random_state(random_state)
         self.scaler = sklearn.preprocessing.StandardScaler(with_mean=False)
         self.scaler.fit(training_data)
 
@@ -36,7 +36,6 @@ class MACFITabularFinder(object):
                      key=lambda x:x[2])
 
         cfi_index = ipd[0][0]
-
         inst = instance.MACFIInstance(plain_instance=perturbed_data[0], 
                                       counter_factual_instance=perturbed_data[cfi_index], 
                                       pi_predict_proba=yss[0],
@@ -57,7 +56,9 @@ class MACFITabularFinder(object):
         data = self.random_state.normal(
                 0, 1, num_samples * raw_instance.shape[0]).reshape(
                 num_samples, raw_instance.shape[0])
+
         data = data * self.scaler.scale_ + raw_instance
         # data = data * self.scaler.scale_ + self.scaler.mean_
+        
         data[0] = raw_instance.copy()
         return data
