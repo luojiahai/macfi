@@ -44,7 +44,7 @@ class MACFITabularFinder(object):
                                       distance=distances[cfi_index])
 
         #debug
-        output_file = open('out.txt', 'w')
+        output_file = open('debug/out.txt', 'w')
         for i, raw, pb, d in zip(range(len(perturbed_data)), perturbed_data, yss, distances):
             output_file.write(str(i) + '\t' + str(['%.4f' % x for x in raw]) + '\t' + str(['%.4f' % x for x in pb]) + '\t' + str(d) + '\n')
 
