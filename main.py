@@ -1,7 +1,8 @@
-# Model-Agnostic Counter-Factual Instances (MACFI)
+# Model-Agnostic Counter-Factual Instance
 
 def main():
     print("Hello, World!")
+
 
 if __name__ == "__main__":
     main()
