@@ -7,6 +7,7 @@ import sklearn.utils
 import interpretation
 from exceptions import MACFIError
 
+
 class MACFITabularFinder(object):
     def __init__(self,
                  training_data,

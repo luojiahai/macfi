@@ -10,6 +10,7 @@ import itertools
 import interpretation
 from exceptions import MACFIError
 
+
 class IndexedString(object):
     """String with various indexes."""
 
@@ -220,6 +221,7 @@ class IndexedCharacters(object):
                 [self.positions[z] for z in words]))
         else:
             return self.positions[words]
+
 
 class MACFITextFinder(object):
     def __init__(self,

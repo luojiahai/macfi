@@ -10,6 +10,7 @@ import macfi_tabular
 import macfi_text
 import interpretation
 
+
 def tabular_driver():
     X = []
     y = []
@@ -72,6 +73,7 @@ def main():
 
     # tabular_driver()
     text_driver()
+
 
 if __name__ == "__main__":
     main()
