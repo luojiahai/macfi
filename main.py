@@ -1,4 +1,4 @@
-# Model-Agnostic Counter-Factual Instance
+# Model-Agnostic Counter-Factual Interpretation
 
 import numpy as np
 from sklearn import svm
@@ -8,7 +8,7 @@ import sklearn.feature_extraction.text
 
 import macfi_tabular
 import macfi_text
-import instance
+import interpretation
 
 def tabular_driver():
     X = []
@@ -27,13 +27,13 @@ def tabular_driver():
     # print(clf.score(X_test, y_test))
     
     finder = macfi_tabular.MACFITabularFinder(X_train)
-    inst = finder.find_counter_factual_instance(np.array([50,50]), predict_fn=clf.predict_proba)
+    intr = finder.find_counter_factual_instance(np.array([50,50]), predict_fn=clf.predict_proba)
 
-    print('plain instance: ' + str(inst.plain_instance))
-    print('counter-factual instance: ' + str(inst.counter_factual_instance))
-    print('plain instance predict proba: ' + str(inst.pi_predict_proba))
-    print('counter-factual instance predict proba: ' + str(inst.cfi_predict_proba))
-    print('distance: ' + str(inst.distance))
+    print('plain instance: ' + str(intr.plain_instance))
+    print('counter-factual instance: ' + str(intr.counter_factual_instance))
+    print('plain instance predict proba: ' + str(intr.pi_predict_proba))
+    print('counter-factual instance predict proba: ' + str(intr.cfi_predict_proba))
+    print('distance: ' + str(intr.distance))
 
 def text_driver():
     X = []
@@ -59,13 +59,13 @@ def text_driver():
     # print(pl.score(X_test, y_test))
 
     finder = macfi_text.MACFITextFinder()
-    inst = finder.find_counter_factual_instance(X_test[0], predict_fn=pl.predict_proba)
+    intr = finder.find_counter_factual_instance(X_test[0], predict_fn=pl.predict_proba)
 
-    print('plain instance: ' + str(inst.plain_instance))
-    print('counter-factual instance: ' + str(inst.counter_factual_instance))
-    print('plain instance predict proba: ' + str(inst.pi_predict_proba))
-    print('counter-factual instance predict proba: ' + str(inst.cfi_predict_proba))
-    print('distance: ' + str(inst.distance))
+    print('plain instance: ' + str(intr.plain_instance))
+    print('counter-factual instance: ' + str(intr.counter_factual_instance))
+    print('plain instance predict proba: ' + str(intr.pi_predict_proba))
+    print('counter-factual instance predict proba: ' + str(intr.cfi_predict_proba))
+    print('distance: ' + str(intr.distance))
 
 def main():
     print("Hello, World!")

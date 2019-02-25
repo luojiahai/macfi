@@ -7,7 +7,7 @@ import sklearn.utils
 import re
 import itertools
 
-import instance
+import interpretation
 from exceptions import MACFIError
 
 class IndexedString(object):
@@ -255,18 +255,18 @@ class MACFITextFinder(object):
             raise MACFIError("Error: no counter-factual instance is found")
 
         cfi_index = ipd[0][0]
-        inst = instance.MACFIInstance(plain_instance=inverse[0], 
-                                      counter_factual_instance=inverse[cfi_index], 
-                                      pi_predict_proba=yss[0],
-                                      cfi_predict_proba=yss[cfi_index],
-                                      distance=distances[cfi_index])
+        intr = interpretation.MACFIInterpretation(plain_instance=inverse[0], 
+                                                  counter_factual_instance=inverse[cfi_index], 
+                                                  pi_predict_proba=yss[0],
+                                                  cfi_predict_proba=yss[cfi_index],
+                                                  distance=distances[cfi_index])
 
         #debug
         output_file = open('debug/text_out.txt', 'w', encoding='utf-8')
         for i, raw, pb, d in zip(range(len(inverse)), inverse, yss, distances):
             output_file.write(str(i) + '\t' + raw + '\t' + str(['%.4f' % x for x in pb]) + '\t' + str(d) + '\n')
 
-        return inst
+        return intr
 
     def perturb(self,
                 raw_instance,
