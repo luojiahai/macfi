@@ -3,13 +3,14 @@
 import numpy as np
 from sklearn import svm
 import sklearn.model_selection
+import sklearn.pipeline
+import sklearn.feature_extraction.text
 
 import macfi_tabular
+import macfi_text
 import instance
 
-def main():
-    print("Hello, World!")
-
+def tabular_driver():
     X = []
     y = []
     f = open('data/square_100.txt', 'r')
@@ -19,8 +20,9 @@ def main():
         X.append([float(x) for x in splited[1:-1]])
         y.append(int(splited[-1]))
 
-    clf = svm.SVC(gamma='scale', probability=True)
     X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.2)
+
+    clf = svm.SVC(gamma='scale', probability=True)
     clf.fit(X_train, y_train)
     # print(clf.score(X_test, y_test))
     
@@ -32,6 +34,44 @@ def main():
     print('plain instance predict proba: ' + str(inst.pi_predict_proba))
     print('counter-factual instance predict proba: ' + str(inst.cfi_predict_proba))
     print('distance: ' + str(inst.distance))
+
+def text_driver():
+    X = []
+    y = []
+    f = open('data/SMSSpamCollection', 'r', encoding='utf-8')
+    for line in f:
+        splited = line.strip().split('\t')
+        X.append(splited[1])
+        if (splited[0] == 'ham'):
+            y.append(0)
+        elif (splited[0] == 'spam'):
+            y.append(1)
+
+    X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.2)
+
+    clf = sklearn.svm.SVC(kernel='linear', C=1.0, probability=True)
+    pl = sklearn.pipeline.Pipeline([
+        ('vect', sklearn.feature_extraction.text.CountVectorizer(lowercase=False)),
+        ('tfidf', sklearn.feature_extraction.text.TfidfTransformer()),
+        ('clf', clf),
+    ])
+    pl.fit(X_train, y_train)
+    # print(pl.score(X_test, y_test))
+
+    finder = macfi_text.MACFITextFinder()
+    inst = finder.find_counter_factual_instance(X_test[0], predict_fn=pl.predict_proba)
+
+    print('plain instance: ' + str(inst.plain_instance))
+    print('counter-factual instance: ' + str(inst.counter_factual_instance))
+    print('plain instance predict proba: ' + str(inst.pi_predict_proba))
+    print('counter-factual instance predict proba: ' + str(inst.cfi_predict_proba))
+    print('distance: ' + str(inst.distance))
+
+def main():
+    print("Hello, World!")
+
+    # tabular_driver()
+    text_driver()
 
 if __name__ == "__main__":
     main()

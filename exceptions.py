@@ -1,0 +1,2 @@
+class MACFIError(Exception):
+    pass
