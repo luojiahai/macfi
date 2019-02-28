@@ -62,8 +62,8 @@ def text_driver():
     finder = macfi_text.MACFITextFinder()
     intr = finder.find_counter_factual_instance(X_test[0], predict_fn=pl.predict_proba)
 
-    print('plain instance: ' + str(intr.plain_instance))
-    print('counter-factual instance: ' + str(intr.counter_factual_instance))
+    print('plain instance: ' + str(intr.plain_instance.encode('utf-8')))
+    print('counter-factual instance: ' + str(intr.counter_factual_instance.encode('utf-8')))
     print('plain instance predict proba: ' + str(intr.pi_predict_proba))
     print('counter-factual instance predict proba: ' + str(intr.cfi_predict_proba))
     print('distance: ' + str(intr.distance))

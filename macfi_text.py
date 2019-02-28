@@ -254,7 +254,7 @@ class MACFITextFinder(object):
                      key=lambda x:x[2])
 
         if not ipd:
-            raise MACFIError("Error: no counter-factual instance is found")
+            raise MACFIError("MACFIError: no counter-factual instance is found")
 
         cfi_index = ipd[0][0]
         intr = interpretation.MACFIInterpretation(plain_instance=inverse[0], 
