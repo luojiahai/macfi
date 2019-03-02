@@ -3,6 +3,7 @@ import sklearn
 import sklearn.metrics
 import sklearn.preprocessing
 import sklearn.utils
+import collections
 
 import interpretation
 from exceptions import MACIError
