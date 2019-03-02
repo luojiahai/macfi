@@ -3,9 +3,10 @@
 Python 3.5.2
 
 ```pip3 install -r requirements```
+
 ```python3 main.py```
 
-### Tabular interpretation
+### tabular interpretation
 
 ```
 plain instance: [50. 50.]
@@ -15,7 +16,7 @@ counter-factual instance predict proba: [0.65148763 0.34851237]
 distance: 0.8353676595444577
 ```
 
-### Text interpretation
+### text interpretation
 
 ```
 plain instance: b"A famous quote : when you develop the ability to listen to 'anything' unconditionally without losing your temper or self
