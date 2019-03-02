@@ -4,7 +4,7 @@ In the context of Interpretable Machine Learning, we define Contrastive Interpre
 
 This program generates a counter-factual instance from a given instance and a binary classifier. The algorithm is: (1) sample around the instance, (2) predict all samples using the predict function of the classifier, (3) calculate distances between samples and the instance, (4) find the sample that is predicted as the opposite class and has the smallest distance.
 
-### run
+## run
 
 python 3.5.2
 
@@ -12,7 +12,7 @@ python 3.5.2
 
 ```python3 main.py```
 
-### tabular interpretation
+## tabular interpretation
 
 ```
 plain instance: [50. 50.]
@@ -22,7 +22,7 @@ counter-factual instance predict proba: [0.65148763 0.34851237]
 distance: 0.8353676595444577
 ```
 
-### text interpretation
+## text interpretation
 
 ```
 plain instance: b"A famous quote : when you develop the ability to listen to 'anything' unconditionally without losing your temper or self
