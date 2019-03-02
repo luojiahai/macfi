@@ -1,4 +1,4 @@
-# macfi
+# Model-Agnostic Contrastive Interpretation (MACI)
 
 Python 3.5.2
 
