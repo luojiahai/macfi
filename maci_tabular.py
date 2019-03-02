@@ -47,8 +47,8 @@ class MACITabularFinder(object):
                                       predict_fn,
                                       num_samples=5000,
                                       distance_metric='euclidean'):
-        inverse = self.perturb(raw_instance, num_samples)
-        scaled_data = (inverse - self.scaler.mean_) / self.scaler.scale_
+        data, inverse = self.perturb(raw_instance, num_samples)
+        scaled_data = (data - self.scaler.mean_) / self.scaler.scale_
 
         distances = sklearn.metrics.pairwise_distances(
                 scaled_data,
@@ -109,4 +109,4 @@ class MACITabularFinder(object):
             inverse[:, column] = inverse_column
         inverse[0] = raw_instance
 
-        return inverse
+        return data, inverse
