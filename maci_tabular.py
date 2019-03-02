@@ -16,8 +16,6 @@ class MACITabularFinder(object):
                  categorical_names=None,
                  random_state=None):
         self.random_state = sklearn.utils.check_random_state(random_state)
-        self.scaler = sklearn.preprocessing.StandardScaler(with_mean=False)
-        self.scaler.fit(training_data)
 
         if categorical_features is None:
             categorical_features = []
@@ -26,6 +24,24 @@ class MACITabularFinder(object):
 
         self.categorical_features = list(categorical_features)
         self.feature_names = list(feature_names)
+
+        self.scaler = None
+        self.scaler = sklearn.preprocessing.StandardScaler(with_mean=False)
+        self.scaler.fit(training_data)
+        self.feature_values = {}
+        self.feature_frequencies = {}
+
+        for feature in self.categorical_features:
+            column = training_data[:, feature]
+
+            feature_count = collections.Counter(column)
+            values, frequencies = map(list, zip(*(feature_count.items())))
+
+            self.feature_values[feature] = values
+            self.feature_frequencies[feature] = (np.array(frequencies) /
+                                                 float(sum(frequencies)))
+            self.scaler.mean_[feature] = 0
+            self.scaler.scale_[feature] = 1
 
     def find_counter_factual_instance(self, 
                                       raw_instance,
