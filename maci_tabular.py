@@ -25,7 +25,6 @@ class MACITabularFinder(object):
         self.categorical_features = list(categorical_features)
         self.feature_names = list(feature_names)
 
-        self.scaler = None
         self.scaler = sklearn.preprocessing.StandardScaler(with_mean=False)
         self.scaler.fit(training_data)
         self.feature_values = {}
@@ -65,7 +64,7 @@ class MACITabularFinder(object):
                      key=lambda x:x[2])
 
         if not ipd:
-            raise MACIError("Error: no counter-factual instance is found")
+            raise MACIError("MACIError: no counter-factual instance is found")
 
         cfi_index = ipd[0][0]
         intr = interpretation.Interpretation(plain_instance=inverse[0], 
