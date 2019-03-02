@@ -11,10 +11,21 @@ from exceptions import MACIError
 class MACITabularFinder(object):
     def __init__(self,
                  training_data,
+                 feature_names=None,
+                 categorical_features=None,
+                 categorical_names=None,
                  random_state=None):
         self.random_state = sklearn.utils.check_random_state(random_state)
         self.scaler = sklearn.preprocessing.StandardScaler(with_mean=False)
         self.scaler.fit(training_data)
+
+        if categorical_features is None:
+            categorical_features = []
+        if feature_names is None:
+            feature_names = [str(i) for i in range(training_data.shape[1])]
+
+        self.categorical_features = list(categorical_features)
+        self.feature_names = list(feature_names)
 
     def find_counter_factual_instance(self, 
                                       raw_instance,
@@ -57,13 +68,30 @@ class MACITabularFinder(object):
     def perturb(self,
                 raw_instance,
                 num_samples):
-        inverse = np.zeros((num_samples, raw_instance.shape[0]))
-        inverse = self.random_state.normal(
+        data = np.zeros((num_samples, raw_instance.shape[0]))
+        data = self.random_state.normal(
                 0, 1, num_samples * raw_instance.shape[0]).reshape(
                 num_samples, raw_instance.shape[0])
 
-        inverse = inverse * self.scaler.scale_ + raw_instance
-        # inverse = inverse * self.scaler.scale_ + self.scaler.mean_
-        
-        inverse[0] = raw_instance.copy()
+        data = data * self.scaler.scale_ + raw_instance
+        # data = data * self.scaler.scale_ + self.scaler.mean_
+
+        categorical_features = self.categorical_features
+        first_row = raw_instance
+
+        data[0] = raw_instance.copy()
+        inverse = data.copy()
+        for column in categorical_features:
+            values = self.feature_values[column]
+            freqs = self.feature_frequencies[column]
+            inverse_column = self.random_state.choice(values, size=num_samples,
+                                                      replace=True, p=freqs)
+            binary_column = np.array([1 if x == first_row[column]
+                                      else 0 for x in inverse_column])
+            binary_column[0] = 1
+            inverse_column[0] = data[0, column]
+            data[:, column] = binary_column
+            inverse[:, column] = inverse_column
+        inverse[0] = raw_instance
+
         return inverse

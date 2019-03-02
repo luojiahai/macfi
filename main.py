@@ -27,7 +27,7 @@ def tabular_driver():
     clf.fit(X_train, y_train)
     # print(clf.score(X_test, y_test))
     
-    finder = maci_tabular.MACITabularFinder(X_train)
+    finder = maci_tabular.MACITabularFinder(np.array(X_train))
     intr = finder.find_counter_factual_instance(np.array([50,50]), predict_fn=clf.predict_proba)
 
     print('plain instance: ' + str(intr.plain_instance))
@@ -71,8 +71,8 @@ def text_driver():
 def main():
     print("Hello, World!")
 
-    # tabular_driver()
-    text_driver()
+    tabular_driver()
+    # text_driver()
 
 
 if __name__ == "__main__":
