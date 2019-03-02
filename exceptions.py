@@ -1,2 +1,2 @@
-class MACFIError(Exception):
+class MACIError(Exception):
     pass

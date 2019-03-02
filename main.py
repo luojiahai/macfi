@@ -1,4 +1,4 @@
-# Model-Agnostic Counter-Factual Interpretation
+# Model-Agnostic Contrastive Interpretation
 
 import numpy as np
 from sklearn import svm
@@ -6,8 +6,8 @@ import sklearn.model_selection
 import sklearn.pipeline
 import sklearn.feature_extraction.text
 
-import macfi_tabular
-import macfi_text
+import maci_tabular
+import maci_text
 import interpretation
 
 
@@ -27,7 +27,7 @@ def tabular_driver():
     clf.fit(X_train, y_train)
     # print(clf.score(X_test, y_test))
     
-    finder = macfi_tabular.MACFITabularFinder(X_train)
+    finder = maci_tabular.MACITabularFinder(X_train)
     intr = finder.find_counter_factual_instance(np.array([50,50]), predict_fn=clf.predict_proba)
 
     print('plain instance: ' + str(intr.plain_instance))
@@ -59,7 +59,7 @@ def text_driver():
     pl.fit(X_train, y_train)
     # print(pl.score(X_test, y_test))
 
-    finder = macfi_text.MACFITextFinder()
+    finder = maci_text.MACITextFinder()
     intr = finder.find_counter_factual_instance(X_test[0], predict_fn=pl.predict_proba)
 
     print('plain instance: ' + str(intr.plain_instance.encode('utf-8')))

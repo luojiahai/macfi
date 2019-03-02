@@ -8,7 +8,7 @@ import re
 import itertools
 
 import interpretation
-from exceptions import MACFIError
+from exceptions import MACIError
 
 
 class IndexedString(object):
@@ -223,7 +223,7 @@ class IndexedCharacters(object):
             return self.positions[words]
 
 
-class MACFITextFinder(object):
+class MACITextFinder(object):
     def __init__(self,
                  split_expression=r'\W+',
                  bow=True,
@@ -254,10 +254,10 @@ class MACFITextFinder(object):
                      key=lambda x:x[2])
 
         if not ipd:
-            raise MACFIError("MACFIError: no counter-factual instance is found")
+            raise MACIError("MACIError: no counter-factual instance is found")
 
         cfi_index = ipd[0][0]
-        intr = interpretation.MACFIInterpretation(plain_instance=inverse[0], 
+        intr = interpretation.Interpretation(plain_instance=inverse[0], 
                                                   counter_factual_instance=inverse[cfi_index], 
                                                   pi_predict_proba=yss[0],
                                                   cfi_predict_proba=yss[cfi_index],

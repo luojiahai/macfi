@@ -1,4 +1,4 @@
-class MACFIInterpretation(object):
+class Interpretation(object):
     def __init__(self, 
                  plain_instance,
                  counter_factual_instance,

@@ -5,10 +5,10 @@ import sklearn.preprocessing
 import sklearn.utils
 
 import interpretation
-from exceptions import MACFIError
+from exceptions import MACIError
 
 
-class MACFITabularFinder(object):
+class MACITabularFinder(object):
     def __init__(self,
                  training_data,
                  random_state=None):
@@ -38,10 +38,10 @@ class MACFITabularFinder(object):
                      key=lambda x:x[2])
 
         if not ipd:
-            raise MACFIError("Error: no counter-factual instance is found")
+            raise MACIError("Error: no counter-factual instance is found")
 
         cfi_index = ipd[0][0]
-        intr = interpretation.MACFIInterpretation(plain_instance=inverse[0], 
+        intr = interpretation.Interpretation(plain_instance=inverse[0], 
                                                   counter_factual_instance=inverse[cfi_index], 
                                                   pi_predict_proba=yss[0],
                                                   cfi_predict_proba=yss[cfi_index],
