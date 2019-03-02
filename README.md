@@ -6,7 +6,7 @@ This program generates a counter-factual instance from a given instance and a bi
 
 ### run
 
-Python 3.5.2
+python 3.5.2
 
 ```pip3 install -r requirements```
 
