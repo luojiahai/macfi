@@ -1,5 +1,9 @@
 # Model-Agnostic Contrastive Interpretation (MACI)
 
+This program generates a counter-factual instance from a given instance and a binary classifier. The algorithm is: (1) sample around the instance, (2) predict all samples using the predict function of the classifier, (3) calculate distances between samples and the instance, (4) find the sample that is predicted as the opposite class and has the smallest distance.
+
+### run
+
 Python 3.5.2
 
 ```pip3 install -r requirements```
