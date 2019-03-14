@@ -22,6 +22,19 @@ counter-factual instance predict proba: [0.65148763 0.34851237]
 distance: 0.8353676595444577
 ```
 
+## tabular interpretation (loan dataset)
+
+```
+plain instance: [1. 4. 1. 0. 0. 0. 3. 3. 1.]
+counter-factual instance: [1. 4. 1. 0. 0. 0. 0. 0. 1.]
+plain instance predict proba: [0.82648734 0.17351266]
+counter-factual instance predict proba: [0.16351895 0.83648105]
+distance: 1.4142135623730951
+counter-factual description:
+-- from last_fico_range_high > 749.00 to last_fico_range_high <= 649.00
+-- from last_fico_range_low > 745.00 to last_fico_range_low <= 645.00
+```
+
 ## text interpretation
 
 ```
