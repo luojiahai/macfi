@@ -162,14 +162,3 @@ def load_dataset(dataset_name,
             filter_fn=filter_fn, balance=True)
         dataset.class_names = ['Good Loan', 'Bad Loan']
     return dataset
-
-def main():
-    dataset = load_dataset('loan')
-    pprint.pprint(dataset.class_names)
-    pprint.pprint(dataset.feature_names)
-    pprint.pprint(dataset.data)
-    pprint.pprint(dataset.categorical_names)
-
-
-if __name__ == "__main__":
-    main()
