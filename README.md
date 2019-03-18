@@ -1,4 +1,4 @@
-# Model-Agnostic Contrastive Interpretation (MACI)
+# maci
 
 In the context of Interpretable Machine Learning, we define Contrastive Interpretation as an instance and its counter-factual case. We use perturbative approach to generate counter-factual instances.
 
