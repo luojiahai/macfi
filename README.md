@@ -46,5 +46,5 @@ counter-factual instance predict proba: [0.19574992 0.80425008]
 distance: 37.445675782877565
 ```
 
-### note
+## note
 this software is implemented based on the implementation of LIME (https://github.com/marcotcr/lime)
