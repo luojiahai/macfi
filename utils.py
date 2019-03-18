@@ -3,9 +3,8 @@ import copy
 import numpy as np
 import sklearn
 import sklearn.preprocessing
-import lime
-import lime.lime_tabular
-import pprint
+
+from discretize import QuartileDiscretizer
 
 
 class Bunch(object):
@@ -79,9 +78,7 @@ def load_csv_dataset(data, target_idx, delimiter=',',
     data = data.astype(float)
     ordinal_features = []
     if discretize:
-        disc = lime.lime_tabular.QuartileDiscretizer(data,
-                                                     categorical_features,
-                                                     feature_names)
+        disc = QuartileDiscretizer(data, categorical_features, feature_names)
         data = disc.discretize(data)
         ordinal_features = [x for x in range(data.shape[1])
                             if x not in categorical_features]
