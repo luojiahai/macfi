@@ -52,10 +52,10 @@ class MACITabularFinder(object):
         scaled_data = (data - self.scaler.mean_) / self.scaler.scale_
 
         distances = sklearn.metrics.pairwise_distances(
-                scaled_data,
-                scaled_data[0].reshape(1, -1),
-                metric=distance_metric
-        ).ravel()
+                        scaled_data,
+                        scaled_data[0].reshape(1, -1),
+                        metric=distance_metric
+                    ).ravel()
 
         yss = predict_fn(inverse)
 
@@ -69,10 +69,10 @@ class MACITabularFinder(object):
 
         cfi_index = ipd[0][0]
         intr = interpretation.Interpretation(plain_instance=inverse[0], 
-                                                  counter_factual_instance=inverse[cfi_index], 
-                                                  pi_predict_proba=yss[0],
-                                                  cfi_predict_proba=yss[cfi_index],
-                                                  distance=distances[cfi_index])
+                                             counter_factual_instance=inverse[cfi_index], 
+                                             pi_predict_proba=yss[0],
+                                             cfi_predict_proba=yss[cfi_index],
+                                             distance=distances[cfi_index])
 
         #debug
         output_file = open('debug/tabular_out.txt', 'w')
@@ -86,10 +86,10 @@ class MACITabularFinder(object):
                 num_samples):
         data = np.zeros((num_samples, raw_instance.shape[0]))
         data = self.random_state.normal(
-                0, 1, num_samples * raw_instance.shape[0]).reshape(
-                num_samples, raw_instance.shape[0])
+                   0, 1, num_samples * raw_instance.shape[0]
+               ).reshape(num_samples, raw_instance.shape[0])
 
-        data = data * self.scaler.scale_ + raw_instance
+        data = data * self.scaler.scale_ + raw_instance     # sample around instance x
         # data = data * self.scaler.scale_ + self.scaler.mean_
 
         categorical_features = self.categorical_features
@@ -100,10 +100,8 @@ class MACITabularFinder(object):
         for column in categorical_features:
             values = self.feature_values[column]
             freqs = self.feature_frequencies[column]
-            inverse_column = self.random_state.choice(values, size=num_samples,
-                                                      replace=True, p=freqs)
-            binary_column = np.array([1 if x == first_row[column]
-                                      else 0 for x in inverse_column])
+            inverse_column = self.random_state.choice(values, size=num_samples, replace=True, p=freqs)
+            binary_column = np.array([1 if x == first_row[column] else 0 for x in inverse_column])
             binary_column[0] = 1
             inverse_column[0] = data[0, column]
             data[:, column] = binary_column
