@@ -16,10 +16,12 @@ python 3.5.2
 
 ```
 plain instance: [50. 50.]
-counter-factual instance: [25.63443904 49.25723863]
-plain instance predict proba: [5.17004319e-06 9.99994830e-01]
-counter-factual instance predict proba: [0.65148763 0.34851237]
-distance: 0.8353676595444577
+counter-factual instance: [73.84056924 51.69836722]
+plain instance prediction: in
+plain instance predict proba: [1.41799091e-06 9.99998582e-01]
+counter-factual instance prediction: out
+counter-factual instance predict proba: [0.56547189 0.43452811]
+distance: 0.817063837363493
 ```
 
 ## tabular interpretation (loan dataset)
@@ -27,7 +29,9 @@ distance: 0.8353676595444577
 ```
 plain instance: [1. 4. 1. 0. 0. 0. 3. 3. 1.]
 counter-factual instance: [1. 4. 1. 0. 0. 0. 0. 0. 1.]
+plain instance prediction: Good Loan
 plain instance predict proba: [0.82648734 0.17351266]
+counter-factual instance prediction: Bad Loan
 counter-factual instance predict proba: [0.16351895 0.83648105]
 distance: 1.4142135623730951
 counter-factual description:
@@ -37,13 +41,9 @@ counter-factual description:
 
 ## text interpretation
 
+bug found...
 ```
-plain instance: b"A famous quote : when you develop the ability to listen to 'anything' unconditionally without losing your temper or self
-confidence, it means you are ......... 'MARRIED'"
-counter-factual instance: b" famous quote :    the  to listen to ''    your temper or  ,    are ......... ''"
-plain instance predict proba: [0.98753214 0.01246786]
-counter-factual instance predict proba: [0.19574992 0.80425008]
-distance: 37.445675782877565
+...
 ```
 
 ## note
