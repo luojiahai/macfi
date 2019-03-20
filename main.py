@@ -37,9 +37,9 @@ def tabular_driver_1():
     print('plain instance: ' + str(intr.plain_instance))
     print('counter-factual instance: ' + str(intr.counter_factual_instance))
     print('plain instance prediction: ' + class_names[clf.predict([intr.plain_instance])[0]])
-    print('plain instance predict proba: ' + str(intr.pi_predict_proba))
+    print('plain instance predict proba: ' + str(clf.predict_proba([intr.plain_instance])[0]))
     print('counter-factual instance prediction: ' + class_names[clf.predict([intr.counter_factual_instance])[0]])
-    print('counter-factual instance predict proba: ' + str(intr.cfi_predict_proba))
+    print('counter-factual instance predict proba: ' + str(clf.predict_proba([intr.counter_factual_instance])[0]))
     print('distance: ' + str(intr.distance))
 
 def tabular_driver_2():
@@ -61,15 +61,15 @@ def tabular_driver_2():
                                             feature_names=dataset.feature_names,
                                             categorical_features=dataset.categorical_features,
                                             categorical_names=dataset.categorical_names)
-    intr = finder.find_counter_factual_instance(dataset.validation[0], predict_fn=clf.predict_proba)
+    intr = finder.find_counter_factual_instance(dataset.validation[1], predict_fn=clf.predict_proba)
 
     print('\nresult: ')
     print('plain instance: ' + str(intr.plain_instance))
     print('counter-factual instance: ' + str(intr.counter_factual_instance))
     print('plain instance prediction: ' + dataset.class_names[clf.predict([intr.plain_instance])[0]])
-    print('plain instance predict proba: ' + str(intr.pi_predict_proba))
+    print('plain instance predict proba: ' + str(clf.predict_proba([intr.plain_instance])[0]))
     print('counter-factual instance prediction: ' + dataset.class_names[clf.predict([intr.counter_factual_instance])[0]])
-    print('counter-factual instance predict proba: ' + str(intr.cfi_predict_proba))
+    print('counter-factual instance predict proba: ' + str(clf.predict_proba([intr.counter_factual_instance])[0]))
     print('distance: ' + str(intr.distance))
     print('counter-factual description: ')
     for i in range(len(intr.plain_instance)):
@@ -107,18 +107,18 @@ def text_driver():
     print('\nresult: ')
     print('plain instance: ' + str(intr.plain_instance.encode('utf-8')))
     print('counter-factual instance: ' + str(intr.counter_factual_instance.encode('utf-8')))
-    print('plain instance prediction: ' + class_names[pl.predict([intr.plain_instance])[0]])
-    print('plain instance predict proba: ' + str(intr.pi_predict_proba))
-    print('counter-factual instance prediction: ' + class_names[pl.predict([intr.counter_factual_instance])[0]])
-    print('counter-factual instance predict proba: ' + str(intr.cfi_predict_proba))
+    print('plain instance prediction: ' + class_names[pl.predict([intr.plain_instance.encode('utf-8')])[0]])
+    print('plain instance predict proba: ' + str(pl.predict_proba([intr.plain_instance.encode('utf-8')])[0]))
+    print('counter-factual instance prediction: ' + class_names[pl.predict([intr.counter_factual_instance.encode('utf-8')])[0]])
+    print('counter-factual instance predict proba: ' + str(pl.predict_proba([intr.counter_factual_instance.encode('utf-8')])[0]))
     print('distance: ' + str(intr.distance))
 
 def main():
     print("Hello, World!")
 
     # tabular_driver_1()
-    # tabular_driver_2()
-    text_driver()
+    tabular_driver_2()
+    # text_driver()
 
 
 if __name__ == "__main__":

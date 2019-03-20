@@ -39,6 +39,18 @@ counter-factual description:
 -- from last_fico_range_low > 745.00 to last_fico_range_low <= 645.00
 ```
 
+```
+plain instance: [3. 4. 1. 3. 1. 3. 0. 0. 1.]
+counter-factual instance: [3. 4. 1. 3. 1. 3. 0. 2. 1.]
+plain instance prediction: Bad Loan
+plain instance predict proba: [0.16572486 0.83427514]
+counter-factual instance prediction: Good Loan
+counter-factual instance predict proba: [0.68064872 0.31935128]
+distance: 1.0
+counter-factual description:
+-- from last_fico_range_low <= 645.00 to 695.00 < last_fico_range_low <= 745.00
+```
+
 ## text interpretation
 
 bug found...

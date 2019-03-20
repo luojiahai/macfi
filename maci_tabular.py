@@ -69,9 +69,7 @@ class MACITabularFinder(object):
 
         cfi_index = ipd[0][0]
         intr = interpretation.Interpretation(plain_instance=inverse[0], 
-                                             counter_factual_instance=inverse[cfi_index], 
-                                             pi_predict_proba=yss[0],
-                                             cfi_predict_proba=yss[cfi_index],
+                                             counter_factual_instance=inverse[cfi_index],
                                              distance=distances[cfi_index])
 
         #debug
