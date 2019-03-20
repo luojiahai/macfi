@@ -118,7 +118,9 @@ def main():
 
     # tabular_driver_1()
     tabular_driver_2()
+
     # text_driver()
+    # the text perturbation will be considered sears
 
 
 if __name__ == "__main__":
