@@ -53,10 +53,7 @@ counter-factual description:
 
 ## text interpretation
 
-bug found...
-```
-...
-```
+bug found, to be fixed...
 
 ## note
 this software is implemented based on the implementation of LIME (https://github.com/marcotcr/lime)
