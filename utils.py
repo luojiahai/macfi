@@ -7,7 +7,7 @@ import sklearn.preprocessing
 from discretize import QuartileDiscretizer
 
 
-class Bunch(object):
+class Dataset(object):
     def __init__(self, adict):
         self.__dict__.update(adict)
 
@@ -31,7 +31,7 @@ def load_csv_dataset(data, target_idx, delimiter=',',
                                dtype=str).fillna(fill_na).values
     if target_idx < 0:
         target_idx = data.shape[1] + target_idx
-    ret = Bunch({})
+    ret = Dataset({})
     if feature_names is None:
         feature_names = list(data[0])
         data = data[1:]
@@ -158,4 +158,18 @@ def load_dataset(dataset_name,
             categorical_features=categorical_features, discretize=discretize,
             filter_fn=filter_fn, balance=True)
         dataset.class_names = ['Good Loan', 'Bad Loan']
+    if (dataset_name == 'breast'):
+        features_to_use = [i for i in range(2, 12)]
+        feature_names = ['id', 'diagnosis',
+                         'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean',
+                         'compactness_mean', 'concavity_mean', 'concave_points_mean', 'symmetry_mean', 'fractal_dimension_mean',
+                         'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se',
+                         'compactness_se', 'concavity_se', 'concave_points_se', 'symmetry_se', 'fractal_dimension_se',
+                         'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst',
+                         'compactness_worst', 'concavity_worst', 'concave_points_worst', 'symmetry_worst', 'fractal_dimension_worst']
+        dataset = load_csv_dataset(
+            os.path.join(dataset_folder + '/breast-cancer', 'wdbc.data'),
+            1, ',', feature_names=feature_names, features_to_use=features_to_use, 
+            discretize=discretize, balance=True)
+        dataset.class_names = ['Benign', 'Malignant']
     return dataset
