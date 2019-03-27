@@ -26,6 +26,8 @@ distance: 0.817063837363493
 
 ## tabular interpretation (loan dataset)
 
+### dataset properties
+
 ```
 feature_names:
 ['loan_amnt',
@@ -73,6 +75,8 @@ class_names:
 ['Good Loan', 'Bad Loan']
 ```
 
+### results
+
 ```
 plain instance: [1. 4. 1. 0. 0. 0. 3. 3. 1.]
 counter-factual instance: [1. 4. 1. 0. 0. 0. 0. 0. 1.]
@@ -99,6 +103,8 @@ counter-factual description:
 ```
 
 ## tabular interpretation (breast cancer dataset)
+
+### dataset properties
 
 ```
 feature_names:
@@ -158,6 +164,8 @@ categorical_names:
 class_names:
 ['Benign', 'Malignant']
 ```
+
+### results
 
 ```
 plain instance: [3. 3. 3. 3. 1. 3. 3. 3. 2. 2.]
