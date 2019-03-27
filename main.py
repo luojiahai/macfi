@@ -97,7 +97,7 @@ def tabular_driver_3():
                                             feature_names=dataset.feature_names,
                                             categorical_features=dataset.categorical_features,
                                             categorical_names=dataset.categorical_names)
-    intr = finder.find_counter_factual_instance(dataset.validation[2], predict_fn=clf.predict_proba)
+    intr = finder.find_counter_factual_instance(dataset.validation[0], predict_fn=clf.predict_proba)
 
     print('\nresult: ')
     print('plain instance: ' + str(intr.plain_instance))
