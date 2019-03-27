@@ -53,6 +53,7 @@ counter-factual description:
 
 ## tabular interpretation (breast cancer dataset)
 
+```
 plain instance: [3. 3. 3. 3. 1. 3. 3. 3. 2. 2.]
 counter-factual instance: [1. 3. 3. 0. 1. 3. 3. 2. 2. 2.]
 plain instance prediction: Malignant
@@ -64,6 +65,22 @@ counter-factual description:
 -- from radius_mean > 15.78 to 11.70 < radius_mean <= 13.37
 -- from area_mean > 782.70 to area_mean <= 420.30
 -- from concave_points_mean > 0.07 to 0.03 < concave_points_mean <= 0.07
+```
+
+```
+plain instance: [2. 1. 1. 2. 0. 0. 0. 0. 0. 0.]
+counter-factual instance: [2. 3. 3. 2. 0. 0. 3. 0. 1. 0.]
+plain instance prediction: Benign
+plain instance predict proba: [0.95620145 0.04379855]
+counter-factual instance prediction: Malignant
+counter-factual instance predict proba: [0.1059929 0.8940071]
+distance: 2.0
+counter-factual description:
+-- from 16.17 < texture_mean <= 18.84 to texture_mean > 21.80
+-- from 75.17 < perimeter_mean <= 86.24 to perimeter_mean > 104.10
+-- from concavity_mean <= 0.03 to concavity_mean > 0.13
+-- from symmetry_mean <= 0.16 to 0.16 < symmetry_mean <= 0.18
+```
 
 ## note
 this software is implemented based on the implementation of LIME (https://github.com/marcotcr/lime)
