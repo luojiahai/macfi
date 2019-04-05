@@ -9,7 +9,7 @@ import interpretation
 from exceptions import MACIError
 
 
-class MACITabularFinder(object):
+class MACITabularExplainer(object):
     def __init__(self,
                  training_data,
                  feature_names=None,
@@ -43,34 +43,46 @@ class MACITabularFinder(object):
             self.scaler.mean_[feature] = 0
             self.scaler.scale_[feature] = 1
 
-    def find_counter_factual_instance(self, 
-                                      raw_instance,
-                                      predict_fn,
-                                      num_samples=5000,
-                                      distance_metric='euclidean'):
-        data, inverse = self.perturb(raw_instance, num_samples)
+    def explain(self, 
+                raw_instance,
+                predict_fn,
+                num_samples=5000,
+                distance_metric='euclidean'):
+        data, inverse = self._perturb(raw_instance, num_samples)
         scaled_data = (data - self.scaler.mean_) / self.scaler.scale_
 
-        distances = sklearn.metrics.pairwise_distances(
-                        scaled_data,
-                        scaled_data[0].reshape(1, -1),
-                        metric=distance_metric
-                    ).ravel()
+        distances = self._distance(data=scaled_data,
+                                   instance=scaled_data[0], 
+                                   distance_metric=distance_metric)
 
         yss = predict_fn(inverse)
 
-        ipd = sorted([(i, p, d) for i, p, d 
-                     in zip(range(len(yss)), yss, distances) 
-                     if (p[0] > p[1]) != (yss[0][0] > yss[0][1])], 
-                     key=lambda x:x[2])
-
-        if not ipd:
+        counter_factual_list = list(filter(lambda x: (x[1][0] > x[1][1]) != (yss[0][0] > yss[0][1]), 
+                                           zip(range(len(inverse)), yss, distances)))
+        counter_factual_list = sorted(counter_factual_list, key=lambda x: x[2])
+        if not counter_factual_list:
             raise MACIError("MACIError: no counter-factual instance is found")
+        counter_factual_instance = inverse[counter_factual_list[0][0]]
+        counter_factual_distance = counter_factual_list[0][2]
 
-        cfi_index = ipd[0][0]
+        local_absolute_list = list(filter(lambda x: (x[1][0] > x[1][1]) == (yss[0][0] > yss[0][1]), 
+                                          zip(range(len(inverse)), yss)))
+        local_absolute_instance = None
+        local_absolute_distance = -1
+        for i, _  in local_absolute_list:
+            distances_ = self._distance(data=scaled_data, 
+                                        instance=scaled_data[i], 
+                                        distance_metric=distance_metric)
+            distances_counter_score = sum([distances_[j] for j, _, _ in counter_factual_list])
+            if (distances_counter_score > local_absolute_distance):
+                local_absolute_distance = distances_counter_score
+                local_absolute_instance = inverse[i]
+
         intr = interpretation.Interpretation(plain_instance=inverse[0], 
-                                             counter_factual_instance=inverse[cfi_index],
-                                             distance=distances[cfi_index])
+                                             counter_factual_instance=counter_factual_instance,
+                                             counter_factual_distance=counter_factual_distance,
+                                             local_absolute_instance=local_absolute_instance,
+                                             local_absolute_distance=local_absolute_distance)
 
         #debug
         output_file = open('debug/tabular_out.txt', 'w')
@@ -79,9 +91,11 @@ class MACITabularFinder(object):
 
         return intr
 
-    def perturb(self,
-                raw_instance,
-                num_samples):
+    def _distance(self,data, instance, distance_metric):
+        return sklearn.metrics.pairwise_distances(data, instance.reshape(1,-1),
+                                                  metric=distance_metric).ravel()
+    
+    def _perturb(self, raw_instance, num_samples):
         data = np.zeros((num_samples, raw_instance.shape[0]))
         data = self.random_state.normal(
                    0, 1, num_samples * raw_instance.shape[0]
