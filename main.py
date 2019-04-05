@@ -31,7 +31,7 @@ def tabular_driver_1():
     # print(clf.score(X_test, y_test))
     
     explainer = maci_tabular.MACITabularExplainer(np.array(X_train))
-    intr = explainer.explain(np.array([50,50]), predict_fn=clf.predict_proba)
+    intr = explainer.explain(np.array([30,30]), predict_fn=clf.predict_proba)
 
     print('\nresult: ')
     print('plain instance: ' + str(intr.plain_instance))
@@ -65,7 +65,7 @@ def tabular_driver_2():
                                                feature_names=dataset.feature_names,
                                                categorical_features=dataset.categorical_features,
                                                categorical_names=dataset.categorical_names)
-    intr = explainer.explain(dataset.validation[1], predict_fn=clf.predict_proba)
+    intr = explainer.explain(dataset.validation[0], predict_fn=clf.predict_proba)
 
     print('\nresult: ')
     print('plain instance: ' + str(intr.plain_instance))
@@ -104,7 +104,7 @@ def tabular_driver_3():
                                             feature_names=dataset.feature_names,
                                             categorical_features=dataset.categorical_features,
                                             categorical_names=dataset.categorical_names)
-    intr = explainer.explain(dataset.validation[1], predict_fn=clf.predict_proba)
+    intr = explainer.explain(dataset.validation[0], predict_fn=clf.predict_proba)
 
     print('\nresult: ')
     print('plain instance: ' + str(intr.plain_instance))

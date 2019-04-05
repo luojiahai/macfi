@@ -54,7 +54,6 @@ class MACITabularExplainer(object):
         distances = self._distance(data=scaled_data,
                                    instance=scaled_data[0], 
                                    distance_metric=distance_metric)
-
         yss = predict_fn(inverse)
 
         counter_factual_list = list(filter(lambda x: (x[1][0] > x[1][1]) != (yss[0][0] > yss[0][1]), 
@@ -73,10 +72,13 @@ class MACITabularExplainer(object):
             distances_ = self._distance(data=scaled_data, 
                                         instance=scaled_data[i], 
                                         distance_metric=distance_metric)
-            distances_counter_score = sum([distances_[j] for j, _, _ in counter_factual_list])
-            if (distances_counter_score > local_absolute_distance):
-                local_absolute_distance = distances_counter_score
-                local_absolute_instance = inverse[i]
+            counter_factual_list_ = [(j, distances_[j]) for j, _, _ in counter_factual_list]
+            counter_factual_list_ = sorted(counter_factual_list_, key=lambda x: x[1])
+            counter_factual_instance_ = inverse[i]
+            counter_factual_distance_ = counter_factual_list_[0][1]
+            if (counter_factual_distance_ > local_absolute_distance):
+                local_absolute_distance = counter_factual_distance_
+                local_absolute_instance = counter_factual_instance_
 
         intr = interpretation.Interpretation(plain_instance=inverse[0], 
                                              counter_factual_instance=counter_factual_instance,
