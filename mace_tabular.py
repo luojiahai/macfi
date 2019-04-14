@@ -5,11 +5,11 @@ import sklearn.preprocessing
 import sklearn.utils
 import collections
 
-import interpretation
-from exceptions import MACIError
+import explanation
+from exceptions import MACEError
 
 
-class MACITabularExplainer(object):
+class MACETabularExplainer(object):
     def __init__(self,
                  training_data,
                  feature_names=None,
@@ -60,7 +60,7 @@ class MACITabularExplainer(object):
                                            zip(range(len(inverse)), yss, distances)))
         counter_factual_list = sorted(counter_factual_list, key=lambda x: x[2])
         if not counter_factual_list:
-            raise MACIError("MACIError: no counter-factual instance is found")
+            raise MACEError("MACEError: no counter-factual instance is found")
         counter_factual_instance = inverse[counter_factual_list[0][0]]
         counter_factual_distance = counter_factual_list[0][2]
 
@@ -80,18 +80,18 @@ class MACITabularExplainer(object):
                 local_absolute_distance = counter_factual_distance_
                 local_absolute_instance = counter_factual_instance_
 
-        intr = interpretation.Interpretation(plain_instance=inverse[0], 
-                                             counter_factual_instance=counter_factual_instance,
-                                             counter_factual_distance=counter_factual_distance,
-                                             local_absolute_instance=local_absolute_instance,
-                                             local_absolute_distance=local_absolute_distance)
+        expl = explanation.Explanation(plain_instance=inverse[0], 
+                                       counter_factual_instance=counter_factual_instance,
+                                       counter_factual_distance=counter_factual_distance,
+                                       local_absolute_instance=local_absolute_instance,
+                                       local_absolute_distance=local_absolute_distance)
 
         #debug
         output_file = open('debug/tabular_out.txt', 'w')
         for i, raw, pb, d in zip(range(len(inverse)), inverse, yss, distances):
             output_file.write(str(i) + '\t' + str(['%.4f' % x for x in raw]) + '\t' + str(['%.4f' % x for x in pb]) + '\t' + str(d) + '\n')
 
-        return intr
+        return expl
 
     def _distance(self,data, instance, distance_metric):
         return sklearn.metrics.pairwise_distances(data, instance.reshape(1,-1),

@@ -1,6 +1,6 @@
-# maci
+# mace
 
-In the context of Interpretable Machine Learning, we define Contrastive Interpretation as an instance and its counter-factual case. We use perturbative approach to generate counter-factual instances.
+In the context of Interpretable Machine Learning, we define Contrastive Explanation as an instance and its counter-factual case. We use perturbative approach to generate counter-factual instances.
 
 This program generates a counter-factual instance from a given instance and a binary classifier. The algorithm is: (1) sample around the instance, (2) predict all samples using the predict function of the classifier, (3) calculate distances between samples and the instance, (4) find the sample that is predicted as the opposite class and has the smallest distance.
 
@@ -12,7 +12,7 @@ python 3.5.2
 
 ```python3 main.py```
 
-## tabular interpretation
+## tabular explanation
 
 ```
 plain instance: [30. 30.]
@@ -28,7 +28,7 @@ local absolute instance predict proba: [2.72031224e-06 9.99997280e-01]
 local absolute distance: 0.8272692239247156
 ```
 
-## tabular interpretation (loan dataset)
+## tabular explanation (loan dataset)
 
 ### dataset properties
 
@@ -98,7 +98,7 @@ local absolute instance predict proba: [0.81821789 0.18178211]
 local absolute distance: 1.7320508075688772
 ```
 
-## tabular interpretation (breast cancer dataset)
+## tabular explanation (breast cancer dataset)
 
 ### dataset properties
 

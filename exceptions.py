@@ -1,2 +1,2 @@
-class MACIError(Exception):
+class MACEError(Exception):
     pass

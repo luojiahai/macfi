@@ -1,4 +1,4 @@
-class Interpretation(object):
+class Explanation(object):
     def __init__(self, 
                  plain_instance,
                  counter_factual_instance=None,
