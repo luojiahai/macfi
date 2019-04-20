@@ -80,11 +80,12 @@ class MACETabularExplainer(object):
                 local_absolute_distance = counter_factual_distance_
                 local_absolute_instance = counter_factual_instance_
 
-        expl = explanation.Explanation(plain_instance=inverse[0], 
-                                       counter_factual_instance=counter_factual_instance,
-                                       counter_factual_distance=counter_factual_distance,
-                                       local_absolute_instance=local_absolute_instance,
-                                       local_absolute_distance=local_absolute_distance)
+        expl = explanation.Explanation()
+        expl.plain_instance = inverse[0]
+        expl.counter_factual_instance = counter_factual_instance
+        expl.counter_factual_distance = counter_factual_distance
+        expl.local_absolute_instance = local_absolute_instance
+        expl.local_absolute_distance = local_absolute_distance
 
         #debug
         output_file = open('debug/tabular_out.txt', 'w')
